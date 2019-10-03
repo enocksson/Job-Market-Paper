@@ -28,6 +28,6 @@ Main results reported in Table 6.1 and Table 6.2 are compiled using `main.jl`. T
   - `r200 (100% increase rho)`
   - `rINF (Full flexibility)`
 
-
+For example, to compile results using the baseline paramaterization, run `julia main.jl Base`
 
 
