@@ -28,6 +28,21 @@ Main results reported in Table 6.1 and Table 6.2 are compiled using `main.jl`. T
   - `r200 (100% increase rho)`
   - `rINF (Full flexibility)`
 
-For example, to compile results using the baseline paramaterization, run `julia main.jl Base`
+For example, to compile results using the baseline paramaterization, run ```julia main.jl Base```
+
+### Warning
+
+Running the program takes time. The script can easily be adjusted to take advantage of parallelization. If doing this it is advisable to exploit a high performance computing system where a larger number of cores can be exploited. However, an alternative (simpler) method is to run each counterfactual simultaneously on seperate computing nodes.
+
+### Figures
+
+Figures can be compiled in a similar fashion. Again, for the baseline parameterization, run
+```
+julia figures.jl BL
+```
+
+## Final Comments
+
+Running the file `full.sh` will compile all results found in the paper.
 
 
