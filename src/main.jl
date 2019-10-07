@@ -204,8 +204,6 @@ function main()
     Weight = zeros(nx)
    
     while( !MarketsClear )
-
-        #Switch = 0;
     
         # ----------------------------------------------------------------------------- #
         # Value Function Iteration                                                      #
@@ -215,7 +213,7 @@ function main()
         ValueDist = 1;
                 
         while(ValueDist >= ValTolerance && ValueIter < ValueIterMax) 
-            if ValueDist < ValTolerance; Switch += 1; end; ValueIter += 1
+            if ValueDist < ValTolerance; end; ValueIter += 1
 
             ExpVF[:,:] = β * (ρ*VFold[:,1:nx] + (1-ρ)*VFold[:,nx+1:2*nx])
             
