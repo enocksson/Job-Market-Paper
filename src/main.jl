@@ -4,8 +4,8 @@
 # Date:     October, 2019                                                                      #
 # -------------------------------------------------------------------------------------------- #
 
-# const tablesfolder = string("../out/tables/",ARGS[1],"/")
-# run(`mkdir -p $tablesfolder`)
+const tablesfolder = string("../out/tables/",ARGS[1],"/")
+run(`mkdir -p $tablesfolder`)
 
 # const Counterfactuals = ["BL", "dlo", "dhi", "rlo", "rhi", "slo", "shi", "plo", "phi"]
 const Counterfactuals = ["Base", 
@@ -20,14 +20,11 @@ const Counterfactuals = ["Base",
                          "r200",
                          "rALL"]
 
+#"dlo", "dhi", "rlo", "rhi", "slo", "shi", "plo", "phi"]
 
-
-"dlo", "dhi", "rlo", "rhi", "slo", "shi", "plo", "phi"]
-
-# const counterfactual = find(ARGS[1] .== Counterfactuals)[1]
+ const counterfactual = find(ARGS[1] .== Counterfactuals)[1]
 # const Prices = readdlm(string(tablesfolder,"Prices.csv"))
-const Prices = readdlm("../out/tables/Prices.csv")
-
+const Prices = readdlm(string(tablesfolder,"Prices.csv"))
 
 const Φ = [1.0-17.6323/43.1091 1.0-10.0/43.1091 1.0-29/43.10911]
 const Θ = [1.0 1.0 2.0 1.0;    # Base
@@ -35,7 +32,7 @@ const Θ = [1.0 1.0 2.0 1.0;    # Base
            1.0 0.5 2.0 1.0;    # d050
            1.0 1.5 2.0 1.0;    # d150
            1.0 2.0 2.0 1.0;    # d200
-           1.0 Inf 2.0 1.0;    # dINF
+           1.0 1.0 2.0 1.0;    # dINF
            0.0 1.0 2.0 1.0;    # r000
            0.5 1.0 2.0 1.0;    # r050
            1.5 1.0 2.0 1.0;    # r150
@@ -46,8 +43,9 @@ const Θ = [1.0 1.0 2.0 1.0;    # Base
            1.0 1.0 2.0 3.0;    # Lo φ Robustness
            1.0 1.0 2.0 2.0]    # Hi φ Robustness
 
-# const θ = Θ[counterfactual,:]
-const θ = Θ[1,:]
+const θ = Θ[counterfactual,:]
+#const θ = Θ[1,:]
+
 function main()
 
     # ---------------------------------------------------------------------------------------- #
@@ -62,33 +60,30 @@ function main()
     const η = 0.55                                              # Production Function Parameter 2
     const ϵ = 1.0-α-η                                           # Production Function Parameter 3
     const ϕ = (θ[4]==1)*Φ[1]+(θ[4]==2)*Φ[2]+(θ[4]==3)*Φ[3]      # Part Time Relative Full Time
-    const ρ = θ[1] >= 0 ? .1315*θ[1] : 1      #.1325 .1375 .1425 .1475 .1525 1575  .1975 .2175 .2375                         # 4.18% Dual workers
+    const ρ = θ[1] >= 0 ? .1314*θ[1] : 1                        # 3.25 % Dual workers
     println(ρ)
     const d = .23323173803526442*θ[2]                           # Wage Discrimination
 
     # Grids
-    # const A = linspace(0,20000,2500) .* linspace(0.01,1,2500)   # Asset Grid
-    # const K = linspace(0,15000,2500) .* linspace(0.02,1,2500)   # Capital Grid
-    # const H = linspace(0,1,100)                                 # Management Grid
-    const A = linspace(0,2500,1000) .* linspace(0.01,1,1000)   # Asset Grid
-    const K = linspace(0,3000,1000) .* linspace(0.02,1,1000)   # Capital Grid
-    const H = linspace(0,1,100)                                 # Management Grid
+    const A = linspace(0,2500,1000) .* linspace(0.01,1,1000)    # Asset Grid
+    const K = linspace(0,3000,1000) .* linspace(0.02,1,1000)    # Capital Grid
+    const H = linspace(0,1,100); 
 
     # Transition States and Probabilities
     const Xz = [0.000 1.000]                                    # Contract States
     const Pz = [ρ 1-ρ; ρ 1-ρ]                                   # Flexibility Transition Matrix  
     const Xe = [0.000 3.000]                                    # Entrepreneur Productivity Shocks
-    const Pe = [0.907 0.093; 0.191 0.809]                       # Entrepreneur Transition Matrix
+    const Pe = [0.9070 0.0930; 0.1894 0.8106]                   # Entrepreneur Transition Matrix
     const Xw = [0.646 0.798 0.966 1.169 1.444]                  # Worker Productivity Shocks
     const Pw = [0.731 0.253 0.016 0.000 0.000;                  # Worker Transition Matrix
                 0.192 0.555 0.236 0.017 0.000;                  
                 0.011 0.222 0.534 0.222 0.011;                  
                 0.000 0.017 0.236 0.555 0.192;                  
-                0.000 0.000 0.016 0.253 0.731]
+                0.000 0.000 0.016 0.253 0.731]                  
     const Px = kron(Pe,Pw)                                      # Ability Tran Matrix
-    const Σ  = kron(Pz,Px)                                       # Type Tran Matrix
+    const Σ  = kron(Pz,Px)                                      # Type Tran Matrix
 
-    # Grid and State Lengths
+    # Grid and State Lengths                                    
     const na = length(A)                                        # Asset Length         
     const nk = length(K)                                        # Capital Length       
     const nh = length(H)                                        # Management Length    
@@ -108,8 +103,7 @@ function main()
   
     # Initialize Value and Policy Functions
     VFold = zeros(Float64,na,nn)                                # Old Value Function: V
-    VFold = readdlm("../out/tables/ValueFunction.csv")
-    # VFold = readdlm("../out/tables/BL/ValueFunction.csv")
+    VFold = readdlm(string(tablesfolder,"ValueFunction.csv"))
     VFnew = SharedArray{Float64}(na,nn)                         # New Value Function: TV
     Asset = SharedArray{Float64}(na,nn,nn)                      # Asset Policy Function
     Capit = SharedArray{Float64}(na,nn)                         # Capital Policy Function
@@ -154,8 +148,8 @@ function main()
     # Initial Guess for Prices                                                          #
     # --------------------------------------------------------------------------------- #
 
-    Rate = Prices[1]#-0.00001
-    Wage = Prices[2]#-0.00001
+    Rate = Prices[1]
+    Wage = Prices[2]
     WBar = Prices[3]
  
     # --------------------------------------------------------------------------------- #
@@ -196,10 +190,10 @@ function main()
     RateMin, RateMax = 0.8*Rate, 1.2*Rate
     WBarMin, WBarMax = 0.9*Wage, 1.0*Wage
 
-    const ValTolerance     = 1e-3    
+    const ValTolerance     = 5e-4    
     const WageTolerance    = 1e-2
     const RateTolerance    = 1e-2
-    const WageBarTolerance = 1e-2
+    const WageBarTolerance = 1e-3
 
     const WIterMax     = 20
     const RIterMax     = 20
@@ -235,7 +229,7 @@ function main()
                 CapitHi = 1; CapitUB = nk
                 ManagHi = 1; ManagUB = nh
                 AssetHi = fill(1,nx); AssetPr = fill(1,nx);
-                        
+
                 for jj=1:na
                     ExValueHi = -1000.0
                     Resources = (1+Rate-δ)*A[jj]
@@ -292,7 +286,7 @@ function main()
 
                 end
             end
-            
+
             ValueDist = maximum(abs.(VFnew-VFold))
             VFold[:] = VFnew
             println(ValueIter," Value Function Norm: ",ValueDist)
@@ -390,10 +384,6 @@ function main()
             Witer = 1
         else
             MarketsClear = true
-            println("Markets Clear:")
-            println("Excess Wage Bar = ",ExWageBar)
-            println(" Excess Capital = ",ExCapitDemand)
-            println("   Excess Labor = ",ExLaborDemand)
         end
 
     end
@@ -425,21 +415,21 @@ function main()
         AssetFlat[:,(1+nn*(ii-1)):(nn+nn*(ii-1))] = Asset[:,:,ii]
     end
     
-    writedlm("../out/tables/A.csv",                     A)
-    writedlm("../out/tables/K.csv",                     K)
-    writedlm("../out/tables/H.csv",                     H)
-    writedlm("../out/tables/Pw.csv",                    Pw)
-    writedlm("../out/tables/Pe.csv",                    Pe)
-    writedlm("../out/tables/ValueFunction.csv",         VFnew)
-    writedlm("../out/tables/Manag.csv",                 Manag)
-    writedlm("../out/tables/Asset.csv",                 AssetFlat)
-    writedlm("../out/tables/Capital.csv",               Capit)
-    writedlm("../out/tables/Labor.csv",                 Capit .* (η/α) .* (Rate/WBar))
-    writedlm("../out/tables/OccupationMeasures.csv",    OccupationMeasures)
-    writedlm("../out/tables/Prices.csv",                [Rate Wage WBar])
-    writedlm("../out/tables/InvariantDistribution.csv", NewDistr)
-    writedlm("../out/tables/mu.csv",                    μ)
-    writedlm("../out/tables/lambda.csv",                λ)
+    writedlm(string(tablesfolder,"A.csv"),                     A)
+    writedlm(string(tablesfolder,"K.csv"),                     K)
+    writedlm(string(tablesfolder,"H.csv"),                     H)
+    writedlm(string(tablesfolder,"Pw.csv"),                    Pw)
+    writedlm(string(tablesfolder,"Pe.csv"),                    Pe)
+    writedlm(string(tablesfolder,"ValueFunction.csv"),         VFnew)
+    writedlm(string(tablesfolder,"Manag.csv"),                 Manag)
+    writedlm(string(tablesfolder,"Asset.csv"),                 AssetFlat)
+    writedlm(string(tablesfolder,"Capital.csv"),               Capit)
+    writedlm(string(tablesfolder,"Labor.csv"),                 Capit .* (η/α) .* (Rate/WBar))
+    writedlm(string(tablesfolder,"OccupationMeasures.csv"),    OccupationMeasures)
+    writedlm(string(tablesfolder,"Prices.csv"),                [Rate Wage WBar])
+    writedlm(string(tablesfolder,"InvariantDistribution.csv"), NewDistr)
+    writedlm(string(tablesfolder,"mu.csv"),                    μ)
+    writedlm(string(tablesfolder,"lambda.csv"),                λ)
 
     # --------------------------------------------------------------------------------- #
     #                                       FIN                                         #
