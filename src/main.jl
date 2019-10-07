@@ -7,7 +7,6 @@
 const tablesfolder = string("../out/tables/",ARGS[1],"/")
 run(`mkdir -p $tablesfolder`)
 
-# const Counterfactuals = ["BL", "dlo", "dhi", "rlo", "rhi", "slo", "shi", "plo", "phi"]
 const Counterfactuals = ["Base", 
                          "d000",
                          "d050",
@@ -18,12 +17,13 @@ const Counterfactuals = ["Base",
                          "r050",
                          "r150",
                          "r200",
-                         "rALL"]
+                         "rALL",
+                         "sloo", 
+                         "shii", 
+                         "ploo", 
+                         "phii"]
 
-#"dlo", "dhi", "rlo", "rhi", "slo", "shi", "plo", "phi"]
-
- const counterfactual = find(ARGS[1] .== Counterfactuals)[1]
-# const Prices = readdlm(string(tablesfolder,"Prices.csv"))
+const counterfactual = find(ARGS[1] .== Counterfactuals)[1]
 const Prices = readdlm(string(tablesfolder,"Prices.csv"))
 
 const Φ = [1.0-17.6323/43.1091 1.0-10.0/43.1091 1.0-29/43.10911]
@@ -44,7 +44,6 @@ const Θ = [1.0 1.0 2.0 1.0;    # Base
            1.0 1.0 2.0 2.0]    # Hi φ Robustness
 
 const θ = Θ[counterfactual,:]
-#const θ = Θ[1,:]
 
 function main()
 
