@@ -14,7 +14,6 @@ Pe = readdlm("../out/tables/Base/Pe.csv")
 Pw = (Pw^1000)[1,:]
 Pe = (Pe^1000)[1,:]
 ρ = [.1314 1-.1314]
-MaxInd = findfirst(A .> 1000)[1]
 
 # Value Functions
 VFBase = readdlm("../out/tables/Base/ValueFunction.csv")
