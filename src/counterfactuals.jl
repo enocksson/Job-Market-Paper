@@ -120,9 +120,6 @@ writedlm("../out/tables/ResultsForPaper/Counterfactuals1.tex",[
 	row13;
 	row14;
 	row15])
-#
-
-
 
 # Table 2
 row1 = "\\begin{tabularx}{\\textwidth}{L{.16}R{.21}R{.09}R{.09}R{.09}R{.09}R{.09}R{.09}R{.09}}"
