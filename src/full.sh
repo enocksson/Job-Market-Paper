@@ -1,7 +1,6 @@
-# This script compiles all results found in the paper. 
-# Note that this is a bash script. If you are using 
-# julia as an alias, it may be necessary to specify 
-# the path to the Julia executable.
+# This script compiles all results found in Section 6 of the paper. Note 
+# that this is a bash script. If you are using julia as an alias, it may 
+# be necessary to specify the path to the Julia executable.
 
 # Step 1: Run All Counterfactual Experiments
 julia main.jl Base
