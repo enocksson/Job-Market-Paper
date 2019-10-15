@@ -60,7 +60,6 @@ function main()
     const ϵ = 1.0-α-η                                           # Production Function Parameter 3
     const ϕ = (θ[4]==1)*Φ[1]+(θ[4]==2)*Φ[2]+(θ[4]==3)*Φ[3]      # Part Time Relative Full Time
     const ρ = θ[1] >= 0 ? .1314*θ[1] : 1                        # 3.25 % Dual workers
-    println(ρ)
     const d = .23323173803526442*θ[2]                           # Wage Discrimination
 
     # Grids
