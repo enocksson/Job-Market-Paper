@@ -157,4 +157,3 @@ writedlm("../out/tables/ResultsForPaper/Counterfactuals2.tex",[
 	row13;
 	row14;
 	row15])
-
