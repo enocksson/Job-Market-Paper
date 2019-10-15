@@ -4,16 +4,7 @@
 # Date:     October, 2019                                                                     #
 # ------------------------------------------------------------------------------------------- #
 
-tablesfolder = readdir("../out/tables/")
-
-H = readdlm("../out/tables/Base/Manag.csv")
-A = readdlm("../out/tables/Base/A.csv")
-
-Pw = readdlm("../out/tables/Base/Pw.csv")
-Pe = readdlm("../out/tables/Base/Pe.csv")
-Pw = (Pw^1000)[1,:]
-Pe = (Pe^1000)[1,:]
-ρ = [.1314 1-.1314]
+A  = readdlm("../out/tables/Base/A.csv")
 
 # Value Functions
 VFBase = readdlm("../out/tables/Base/ValueFunction.csv")
