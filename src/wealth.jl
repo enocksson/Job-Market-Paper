@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------------------- #
-# Project:  Occupational Choice Under Compensation Frictions                                   #
-# Author:   David Enocksson                                                                    #
-# Date:     October, 2019                                                                      #
+# Project:  Occupational Choice Under Compensation Frictions                                  #
+# Author:   David Enocksson                                                                   #
+# Date:     October, 2019                                                                     #
 # ------------------------------------------------------------------------------------------- #
 
 const tablesfolder = string("../out/tables/",ARGS[1],"/")
