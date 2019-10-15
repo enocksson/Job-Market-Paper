@@ -2,7 +2,7 @@
 
 ## Occupational Choice Under Compensation Frictions
 
-This repository contains code files used to compile the results found in section 6 of the paper. The scripts are written in `julia-0.6.2`. More recent versions of `Julia` may not work.
+This repository contains code files used to compile the results found in Section 6 of the paper. The scripts are written in `julia-0.6.2`. More recent versions of `Julia` may not work.
 
 ### Download
 
@@ -31,6 +31,7 @@ Main results reported in Table 6.1 and Table 6.2 are compiled using `main.jl`. T
 For example, to compile results using the baseline paramaterization, run ```julia main.jl Base```. To compile Tables 5 and 6 you also need to compile welfare and wealth statistics. This can be done (for example) by running
 
 ```julia wealth.jl Base```
+
 ```julia welfare.jl ```
 
 Finally, to compile Table 5 and Table 6, run
