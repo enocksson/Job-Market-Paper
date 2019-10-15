@@ -216,7 +216,8 @@ function main()
             if ValueDist < ValTolerance; end; ValueIter += 1
 
             ExpVF[:,:] = β * (ρ*VFold[:,1:nx] + (1-ρ)*VFold[:,nx+1:2*nx])
-            
+
+            #@sync @paralell for ii=StateToday            
             @time for ii=StateToday
                         
                 Ability2d = rem(ii-1,nx)+1
@@ -376,9 +377,12 @@ function main()
             WBarMin, WBarMax = 0.9*Wage, 1.0*Wage
             RateMin, RateMax = 0.8*Rate, 1.2*Rate
             WBar = .99*Wage
-            WBiter = 1
+            Witer += 1
             Riter = 1
-            Witer = 1
+            WBiter = 1
+        elseif Witer == WIterMax
+            println("Did not converge... Verify price range!")
+            println("Rerunning the script with most recent prices may suffice.")
         else
             MarketsClear = true
         end
@@ -401,7 +405,6 @@ function main()
     OccupationMeasures[1] = sum(NewDistr[find(Manag .== 0.0)])
     OccupationMeasures[3] = sum(NewDistr[find(Manag .== 1.0)])
     OccupationMeasures[2] = 1.0-OccupationMeasures[1]-OccupationMeasures[3]
-
 
     # --------------------------------------------------------------------------------- #
     # Storing Objects as .CSV                                                           #
