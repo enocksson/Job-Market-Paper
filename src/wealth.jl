@@ -11,14 +11,13 @@ A = readdlm(string(tablesfolder,"/A.csv"))
 AssetFlat = readdlm(string(tablesfolder,"/Asset.csv"))
 Manag = readdlm(string(tablesfolder,"/Manag.csv"))
 OccupationMeasures = readdlm(string(tablesfolder,"/OccupationMeasures.csv"))
-na = length(A)
-nn = Int(sqrt(length(AssetFlat[1,:])))
-nx = Int(nn/2)
-Asset = zeros(length(AssetFlat[:,1]),nn,nn)
 
-for ii=1:nn
-    Asset[:,:,ii] = AssetFlat[:,(1+nx*(ii-1)):(nn+nx*(ii-1))]
-end
+na = length(A)
+nn = length(Manag[1,:])
+nx = Int(nn/2)
+Asset = zeros(na,nn,nn)
+
+for ii=1:nn; Asset[:,:,ii] = AssetFlat[:,(1+nx*(ii-1)):(nn+nx*(ii-1))]; end
 
 # Asset Densities and Distributions
 AssetDens, AssetDensW, AssetDensD, AssetDensE = zeros(na), zeros(na), zeros(na), zeros(na)
@@ -47,6 +46,7 @@ Integral = 0
 for ii=2:na
     Integral += AssetDist[ii] * (1 - AssetDist[ii]) * (A[ii] - A[ii-1])
 end
+
 Gini = Integral/MeanWealth
 
 # Theil Index: T = ∫ (k/μ) ln(k/μ) dF(k)
