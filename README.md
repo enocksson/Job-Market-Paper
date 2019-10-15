@@ -28,7 +28,7 @@ Main results reported in Table 6.1 and Table 6.2 are compiled using `main.jl`. T
   - `r200 (100% increase rho)`
   - `rALL (Full flexibility)`
 
-For example, to compile results using the baseline paramaterization, run ```julia main.jl Base```. To compile Tables 5 and 6 you also need to compile welfare and wealth statistics. This can be done (for example) by running
+For example, to compile results using the baseline paramaterization, run ```julia main.jl Base```. To compile tables 5 and 6 you also need to compile welfare and wealth statistics. This can be done (for example) by running
 
 ```julia wealth.jl [folder name]```
 
@@ -51,6 +51,4 @@ julia figures.jl BL
 
 ## Final Comments
 
-Running the file `full.sh` will compile all results found in the paper.
-
-
+Running the file `full.sh` will compile all results found in Section 6 of the paper.
