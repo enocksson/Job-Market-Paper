@@ -16,11 +16,6 @@ julia main.jl r150
 julia main.jl r200
 julia main.jl rINF
 
-julia main.jl sloo
-julia main.jl shii
-julia main.jl ploo
-julia main.jl phii
-
 # Step 2: Compute Wealth Statistics
 julia wealth.jl Base
 julia wealth.jl d000
@@ -34,27 +29,8 @@ julia wealth.jl r150
 julia wealth.jl r200
 julia wealth.jl rINF
 
-# Step 3: Compute General Entropy Wealth Statistics
-julia entropy.jl
-
-# Step 4: Compute Welfare Statistics
+# Step 3: Compute Welfare Statistics
 julia welfare.jl
 
-# Step 5: Compile Figures
-julia figures.jl Base
-julia figures.jl d000
-julia figures.jl d050
-julia figures.jl d150
-julia figures.jl d200
-julia figures.jl dINF
-julia figures.jl r000
-julia figures.jl r050
-julia figures.jl r150
-julia figures.jl r200
-julia figures.jl rINF
-
-# Step 6: Compile Main Tables
+# Step 4: Compile Main Tables
 julia counterfactuals.jl
-
-# Step 7: Compile Robustness Table
-julia robustness.jl
