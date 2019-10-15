@@ -70,16 +70,16 @@ Wealthr200 = readdlm("../out/tables/r200/Wealth.csv")'
 WealthrALL = readdlm("../out/tables/rALL/Wealth.csv")'
 
 Wealth = [WealthBase; 
-		  Wealthd000; 
-		  Wealthd050; 
-		  Wealthd150; 
-		  Wealthd200; 
-		  WealthdINF; 
-		  Wealthr000; 
-		  Wealthr050; 
-		  Wealthr150; 
-		  Wealthr200; 
-		  WealthrALL]
+          Wealthd000; 
+          Wealthd050; 
+          Wealthd150; 
+          Wealthd200; 
+          WealthdINF; 
+          Wealthr000; 
+          Wealthr050; 
+          Wealthr150; 
+          Wealthr200; 
+          WealthrALL]
 
 Wealth[:,1] = Wealth[:,1] / Wealth[1,1]
 Wealth[:,3] = Wealth[:,3] / Wealth[1,3]
