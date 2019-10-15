@@ -30,7 +30,7 @@ Main results reported in Table 6.1 and Table 6.2 are compiled using `main.jl`. T
 
 For example, to compile results using the baseline paramaterization, run ```julia main.jl Base```. To compile Tables 5 and 6 you also need to compile welfare and wealth statistics. This can be done (for example) by running
 
-```julia wealth.jl Base```
+```julia wealth.jl [folder name]```
 
 ```julia welfare.jl ```
 
