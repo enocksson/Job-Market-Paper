@@ -26,9 +26,16 @@ Main results reported in Table 6.1 and Table 6.2 are compiled using `main.jl`. T
   - `r050 (50% reduction rho)`
   - `r150 (50% increase rho)`
   - `r200 (100% increase rho)`
-  - `rINF (Full flexibility)`
+  - `rALL (Full flexibility)`
 
-For example, to compile results using the baseline paramaterization, run ```julia main.jl Base```
+For example, to compile results using the baseline paramaterization, run ```julia main.jl Base```. To compile Tables 5 and 6 you also need to compile welfare and wealth statistics. This can be done (for example) by running
+
+```julia wealth.jl Base```
+```julia welfare.jl ```
+
+Finally, to compile Table 5 and Table 6, run
+
+```julia counterfactuals.jl```
 
 ### Warning
 
