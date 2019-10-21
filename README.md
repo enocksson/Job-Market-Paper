@@ -14,7 +14,7 @@ git clone https://github.com/enocksson/Job-Market-Paper
 ```
 ### Replication
 
-Main results reported in Table 6.1 and Table 6.2 are compiled using `main.jl`. The script requires specifying a folder name as an argument. The folder name has to be one of the following:
+Main results reported in Table 5 and Table 6 are compiled using `main.jl`. The script requires specifying a folder name as an argument. The folder name has to be one of the following:
 
   - `Base (Baseline Parameterization)`
   - `d000 (Eliminating d)`
