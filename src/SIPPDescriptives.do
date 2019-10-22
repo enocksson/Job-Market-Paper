@@ -3,12 +3,12 @@ clear
 
 * * * Data collected from NBER: https://www.nber.org/sipp/2014/pu2014w1.dta.zip
 
-set maxvar 6000  				`Increase allowed number of variables to fit data set'
+set maxvar 6000                 `Increase allowed number of variables to fit data set'
 
-cd "~/Desktop/SIPP" 			`Change working directory'
+cd "~/Desktop/SIPP"             `Change working directory'
 
 * Import data file (Large)
-use pu2014w1.dta 				`870,352 Observations * 5,229 Variables'
+use pu2014w1.dta                `870,352 Observations * 5,229 Variables'
 
 drop if EJB1_JBORSE == 3 | EJB2_JBORSE == 3 | EJB3_JBORSE == 3
 
