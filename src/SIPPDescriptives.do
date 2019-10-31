@@ -283,6 +283,26 @@ graph hbar (percent) occupation1 occupation2 if multiplejobholder == 2 & esex ==
 graph combine g5, rows(1) graphregion(color(white)) xsize(6.5) ysize(7.9)
 graph export IndByOcc.pdf, replace
 
+graph hbar (percent) occupation2 occupation3 if multiplejobholder == 2 & esex == 1 & tage > 24 & EJB1_JBORSE == 2, ///
+	over(naics1, label(labsize(vsmall)) relabel( ///
+	1 `""Agriculture, Forestry, Fishing" "and Hunting, and Mining""' /// 
+	2 `"Construction"' ///
+	3 `"Manufacturing"' ///
+	4 `"Wholesale Trade"' ///
+	5 `"Retail Trade"' ///
+	6 `"Transportation and Warehousing and Utilities"' ///
+	7 `"Information"' ///
+	8 `""Finance and Insurance, and" "Real Estate and Rental and Leasing""' ///
+	9 `""Professional, Scientific, and Management, and" "Administrative and Waste Management Services""' ///
+	10 `""Educational Services, and Health" "Care and Social Assistance""' ///
+	11 `""Arts, Entertainment, and Recreation, and" "Accommodation and Food Services""' ///
+	12 `"Other Services (except Public Administration)"' ///
+	13 `"Public Administration"' ///
+	14 `"Active Duty Military"')) bar(1, color(178 102 255)) bar(2, color(204 153 255)) blabel(total,format(%12.1fc) size(vsmall)) name(g6, replace) ylabel(0(5)20,labsize(small)) ytitle(,size(small)) yscale(range(0,5,20)) legend(nobox region(lcolor(white)) cols(1) symxsize(5) size(vsmall) lab(1 "Dual Employed") lab(2 "Self-Employed") ring(0) position(1)) graphregion(color(white)) bgcolor(white)
+
+graph combine g6, rows(1) graphregion(color(white)) xsize(6.5) ysize(7.9)
+graph export IndByOccSelf.pdf, replace
+
 graph hbar (percent) occupation1 occupation2 if multiplejobholder == 2 & esex == 1 & tage > 24 & EJB1_JBORSE == 1, ///
 	over(naics1, label(labsize(small)) relabel( ///
 	1 `"Agriculture, Forestry, Fishing and Hunting, and Mining"' /// 
@@ -335,6 +355,34 @@ graph export SocByOcc.pdf, replace
 graph combine g1, rows(1) graphregion(color(white)) xsize(4.5) ysize(3.0)
 graph export SocByOccBeamer.pdf, replace
 
+graph hbar (percent) occupation2 occupation3 if multiplejobholder == 2 & EJB1_JBORSE == 2 & esex == 1 & tage > 24, ///
+	over(soc1, label(labsize(vsmall)) relabel( ///
+	1  `"Management"' ///
+	2  `"Business and financial operations"' ///
+	3  `"Computer and mathematical science"' ///
+	4  `"Architecture and engineering"' ///
+	5  `"Life, physical, and social science "' ///
+	6  `"Community and social service occupation"' ///
+	7  `"Legal"' ///
+	8  `"Education, training, and library"' ///
+	9  `"Arts, design, entertainment, sports, and media"' ///
+	10 `"Healthcare practitioner and technical"' ///
+	11 `"Healthcare support"' ///
+	12 `"Building and grounds cleaning and maintenance"' ///
+	13 `"Personal care and service"' ///
+	14 `"Sales and related"' ///
+	15 `"Office and administrative support"' ///
+	16 `"Farming, fishing, and forestry"' ///
+	17 `"Construction and extraction"' ///
+	18 `"Installation, maintenance, and repair"' ///
+	19 `"Production"' ///
+	20 `"Transportation and material moving"' ///
+	21 `"Armed Forces"')) bar(1, color(204 153 255)) bar(2, color(102 107 255)) blabel(total,format(%12.1fc) size(tiny)) name(g2, replace) ylabel(0(5)20,labsize(small)) ytitle(,size(small)) yscale(range(0,5,20)) legend(nobox region(lcolor(white)) cols(1) symxsize(5) size(vsmall) lab(1 "Dual Employed") lab(2 "Self-Employed") ring(0) position(5) bmargin("0 0 1 0")) graphregion(color(white)) bgcolor(white)
+
+graph combine g2, rows(1) graphregion(color(white)) xsize(6.5) ysize(7.9)
+graph export SocByOccSelf.pdf, replace
+
+
 generate mynetworth = thnetworth/1000
 format mynetworth %12.2fc
 
@@ -365,11 +413,11 @@ file write myfile " & \multicolumn{7}{c}{Percentile} & & & &  \\ \cmidrule{2-8}"
 file write myfile " & 5\% & 10\% & 25\% & 50\% & 75\% & 90\% & 95\% & Mean & St.D. & Skew. & Kurt. \\" _newline
 file write myfile "\midrule" _newline
 summarize thnetworth if occupation == 1 & oneormorejobs == 2, detail
-file write myfile " Employed & " %12.0fc (`r(p5)'/1000) " & " %12.0fc (`r(p10)'/1000) " & " %12.0fc (`r(p25)'/1000) " & " %12.0fc (`r(p50)'/1000) " & " %12.0fc (`r(p75)'/1000) " & " %12.0fc (`r(p90)'/1000) " & " %12.0fc (`r(p95)'/1000) " & " %12.0fc (`r(mean)'/1000) " & " %12.0fc (`r(sd)'/1000) " & " %12.2fc (`r(skewness)') " & " %12.2fc (`r(kurtosis)') " \\ " _newline
+file write myfile " Employed & " %12.0fc (`r(p5)'/1000) " & " %12.0fc (`r(p10)'/1000) " & " %12.0fc (`r(p25)'/1000) " & " %12.0fc (`r(p50)'/1000) " & " %12.0fc (`r(p75)'/1000) " & " %12.0fc (`r(p90)'/1000) " & " %12.0fc (`r(p95)'/1000) " & " %12.0fc (`r(mean)'/1000) " & " %12.0fc (`r(sd)'/1000) " & " %12.2fc (`r(skewness)') " & " %12.0fc (`r(kurtosis)') " \\ " _newline
 summarize thnetworth if occupation == 2 & oneormorejobs == 2, detail
-file write myfile " Dual Employed & " %12.0fc (`r(p5)'/1000) " & " %12.0fc (`r(p10)'/1000) " & " %12.0fc (`r(p25)'/1000) " & " %12.0fc (`r(p50)'/1000) " & " %12.0fc (`r(p75)'/1000) " & " %12.0fc (`r(p90)'/1000) " & " %12.0fc (`r(p95)'/1000) " & " %12.0fc (`r(mean)'/1000) " & " %12.0fc (`r(sd)'/1000) " & " %12.2fc (`r(skewness)') " & " %12.2fc (`r(kurtosis)') " \\ " _newline
+file write myfile " Dual Employed & " %12.0fc (`r(p5)'/1000) " & " %12.0fc (`r(p10)'/1000) " & " %12.0fc (`r(p25)'/1000) " & " %12.0fc (`r(p50)'/1000) " & " %12.0fc (`r(p75)'/1000) " & " %12.0fc (`r(p90)'/1000) " & " %12.0fc (`r(p95)'/1000) " & " %12.0fc (`r(mean)'/1000) " & " %12.0fc (`r(sd)'/1000) " & " %12.2fc (`r(skewness)') " & " %12.0fc (`r(kurtosis)') " \\ " _newline
 summarize thnetworth if occupation == 3 & oneormorejobs == 2, detail
-file write myfile " Self-Employed & " %12.0fc (`r(p5)'/1000) " & " %12.0fc (`r(p10)'/1000) " & " %12.0fc (`r(p25)'/1000) " & " %12.0fc (`r(p50)'/1000) " & " %12.0fc (`r(p75)'/1000) " & " %12.0fc (`r(p90)'/1000) " & " %12.0fc (`r(p95)'/1000) " & " %12.0fc (`r(mean)'/1000) " & " %12.0fc (`r(sd)'/1000) " & " %12.2fc (`r(skewness)') " & " %12.2fc (`r(kurtosis)') " \\ " _newline
+file write myfile " Self-Employed & " %12.0fc (`r(p5)'/1000) " & " %12.0fc (`r(p10)'/1000) " & " %12.0fc (`r(p25)'/1000) " & " %12.0fc (`r(p50)'/1000) " & " %12.0fc (`r(p75)'/1000) " & " %12.0fc (`r(p90)'/1000) " & " %12.0fc (`r(p95)'/1000) " & " %12.0fc (`r(mean)'/1000) " & " %12.0fc (`r(sd)'/1000) " & " %12.2fc (`r(skewness)') " & " %12.0fc (`r(kurtosis)') " \\ " _newline
 file write myfile "\bottomrule" _newline
 file write myfile "\end{tabularx}"
 file close myfile
