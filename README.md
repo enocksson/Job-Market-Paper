@@ -42,13 +42,6 @@ Finally, to compile Table 5 and Table 6, run
 
 Running the program takes time. The script can easily be adjusted to take advantage of parallelization. If doing this it is advisable to exploit a high performance computing system where a larger number of cores can be exploited. However, an alternative (simpler) method is to run each counterfactual simultaneously on seperate computing nodes.
 
-### Figures
-
-Figures can be compiled in a similar fashion. Again, for the baseline parameterization, run
-```
-julia figures.jl BL
-```
-
 ## Final Comments
 
 Running the file `full.sh` will compile all results found in Section 6 of the paper.
